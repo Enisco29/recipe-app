@@ -7,7 +7,6 @@ const HomePage = () => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [favorites, setFavorites] = useState([]);
 
   const fetchRecipes = async () => {
     setLoading(true);
@@ -27,19 +26,18 @@ const HomePage = () => {
   };
 
 
-  useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    setFavorites(storedFavorites);
+   useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    setFavorites(favorites);
   }, []);
-
-  const addRecipeToFavorites = (recipe) => {
-    const isRecipeInFavorites = favorites.some((fav) => fav.idMeal === recipe.idMeal);
+    const addRecipeToFavorites = (recipe) => {
+      const isRecipeInFavorites = favorites.some((fav) => fav.idMeal === recipe.idMeal);
     if (isRecipeInFavorites) {
       const updatedFavorites = favorites.filter((fav) => fav.idMeal !== recipe.idMeal);
       setFavorites(updatedFavorites);
       localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
     } else {
-      const updatedFavorites = [...favorites, recipe];
+      const updatedFavorites = [...favorites, recipes];
       setFavorites(updatedFavorites);
       localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
     }
